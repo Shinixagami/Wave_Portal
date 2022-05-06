@@ -13,8 +13,6 @@ const App = () => {
   const contractAddress = "0xc37eC9798729371C7DDFF867fCC6672AEf8E1bA1";
 
   const contractABI = abi.abi;
-
-
   
   /*
   * Just a state variable we use to store our user's public wallet.
@@ -24,6 +22,9 @@ const App = () => {
   const checkIfWalletIsConnected = async () => {
     try {
       const { ethereum } = window;
+
+      //imediately creates the post
+      // getAllWaves(); //does not work 
 
       if (!ethereum) {
         console.log("Make sure you have metamask!");
@@ -38,15 +39,15 @@ const App = () => {
       */
       const accounts = await ethereum.request({ method: "eth_accounts" });
 
-      
 
       if (accounts.length !== 0) {
         const account = accounts[0];
         console.log("Found an authorized account:", account);
         setCurrentAccount(account)
 
-        /* only gets called when ethereum object and account  found */
+
         getAllWaves();
+        
         
       } else {
         console.log("No authorized account found")
@@ -73,6 +74,11 @@ const App = () => {
 
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
+
+
+      //struct waves here   -ONLY WORKING FOLDER.
+      getAllWaves();
+      
     } catch (error) {
       console.log(error)
     }
@@ -147,22 +153,33 @@ const wave = async () => {
         let count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
 
+
+        /*grab data*/
+        let TheMessage = document.querySelector('#TheMessage').value ; 
+        console.log("------The message made is:", TheMessage);     
+
+
+
+        
         /*
         * Execute the actual wave from your smart contract
 
 
         */
-        const waveTxn = await wavePortalContract.wave("This better work or else 1231231243243");
+        const waveTxn = await wavePortalContract.wave(TheMessage);
         console.log("Mining... (New Transaction)", waveTxn.hash);
+
+        //clear queary selector
+        document.querySelector('#TheMessage').value = "";
 
         await waveTxn.wait();
         console.log("Mined -- ", waveTxn.hash);
 
+
+
+
         count = await wavePortalContract.getTotalWaves();
-        console.log("Retrieved total wave count...", count.toNumber());
-
-
-        getAllWaves();
+        console.log("Retrieved total array count...", count.toNumber());
 
 
         //you can use getElementBy Id to change messages! 
@@ -177,6 +194,9 @@ const wave = async () => {
     }
   }
 
+
+
+ 
 
 
   //This smart function was created by Gabe
@@ -207,6 +227,10 @@ const wave = async () => {
 
         document.getElementById("totalcl9").innerHTML = count;
 
+        /*function here*/
+        getAllWaves();
+        
+
         
       } else {
         console.log("Ethereum object doesn't exist!");
@@ -216,6 +240,11 @@ const wave = async () => {
       console.log(error);
     }
   }
+
+  
+
+  
+  
     
 
   useEffect(() => {
@@ -239,7 +268,24 @@ const wave = async () => {
         </div>
 
 
+         <div className="box-container">
+          <div className="center-things">
+
+                <input id="TheMessage" type="text" name="typedMSG" />
+            
+          </div>
+        </div>
+
+
+        
+
+
+    
+    
           
+
+
+        
           <button className="waveButton" onClick={wave}>
             Wave - pushes 1 transaction (No counter)
           </button>
@@ -265,6 +311,9 @@ const wave = async () => {
             </div>)
         })}
 
+
+
+        
         
 
 
