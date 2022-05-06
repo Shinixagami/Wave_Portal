@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import './App.css';
 
-export default function App() {
-
+const App = () => {
   /*
   * Just a state variable we use to store our user's public wallet.
   */
@@ -37,38 +36,26 @@ export default function App() {
     }
   }
 
-    /*
-  * This runs our function when the page loads.
-  */
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [])
 
-  
-
-  
-
-  const wave = () => {
-    
-  }
-  
   return (
     <div className="mainContainer">
-
       <div className="dataContainer">
         <div className="header">
-        👋 Hey there!
+          👋 Hey there!
         </div>
 
         <div className="bio">
-        Hello there my name is Gabe and this is my wave portal! Tune in for more future updates! :)
+          Hello my name is Gabe and I am trying to create a wave portal :)) Pretty cool right!?
         </div>
 
-        <button className="waveButton" onClick={wave}>
+        <button className="waveButton" onClick={null}>
           Wave at Me
         </button>
-        
       </div>
     </div>
-  );
-}
+    );
+  }
+export default App
