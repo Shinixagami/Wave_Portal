@@ -30,9 +30,13 @@
   padding: 8px;
   border: 0;
   border-radius: 5px;
-   width: 500px;
+   
+  width: 500px;
 
+  /* this is aligning itself */
+  align-self: center; 
   
+
   
 }
 

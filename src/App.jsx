@@ -106,6 +106,8 @@ const wave = async () => {
         count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
 
+        
+
 
         //you can use getElementBy Id to change messages! 
         // document.getElementById("greeting").innerHTML = count;
@@ -121,6 +123,11 @@ const wave = async () => {
 
 
 
+
+
+
+
+  //This smart function was created by Gabe
   const checkTotalWaves = async () => {
     try {
       const { ethereum } = window;
@@ -139,7 +146,14 @@ const wave = async () => {
         console.log("Retrieved total wave count...", count.toNumber());
 
         //you can use getElementBy Id to change messages! 
-        document.getElementById("greeting").innerHTML = count;
+
+        // let text1 = "";
+        // let text2 = account; 
+        // let result = text1.concat(text2, "/owned");
+
+        document.getElementById("totalcl9-1").innerHTML = "Number of waves pushed to chain:";
+
+        document.getElementById("totalcl9").innerHTML = count;
 
         
       } else {
@@ -178,29 +192,27 @@ const wave = async () => {
 
 
 
+ 
 
-
-        <div className="center-things">        
-        
-
-        <button className="waveButton" onClick={wave}>
-          Wave - pushes 1 transaction (No counter)
-        </button>
-        
-
-         {/*
-        * If there is no currentAccount render this button
-        */}
-        {!currentAccount && (
-          <button className="waveButton" onClick={connectWallet}>
-            Connect Wallet
+          
+          <button className="waveButton" onClick={wave}>
+            Wave - pushes 1 transaction (No counter)
           </button>
-        )}
+  
+           {/*
+          * If there is no currentAccount render this button
+          */}
+          {!currentAccount && (
+
+              <button className="waveButton" onClick={connectWallet}>
+                Connect Wallet
+              </button>
+           
 
 
+              
+          )}
 
-
-        </div>
 
 
 
@@ -217,11 +229,11 @@ const wave = async () => {
         </div>
 
         <div className="center-things1">        
-        Number of waves pushed to chain:
+          <p id="totalcl9-1"></p>
         </div>
         
         <div className="center-things">        
-          <p id="greeting"></p>
+          <p id="totalcl9"></p>
         </div>
 
           
@@ -232,6 +244,8 @@ const wave = async () => {
 
         
       </div>
+
+      
     </div>
     );
   }
