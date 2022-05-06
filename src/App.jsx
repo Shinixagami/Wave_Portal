@@ -106,8 +106,6 @@ const wave = async () => {
         count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
 
-        
-
 
         //you can use getElementBy Id to change messages! 
         // document.getElementById("greeting").innerHTML = count;
@@ -233,10 +231,6 @@ const wave = async () => {
         <div className="center-things">        
           <p id="totalcl9"></p>
         </div>
-
-          
-
-        
 
 
 
