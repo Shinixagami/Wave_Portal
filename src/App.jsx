@@ -2,7 +2,23 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import './App.css';
 
+//abi smart contract file
+import abi from "./utils/WavePortal.json";
+
+
 const App = () => {
+
+
+  //this is the wave portal address
+  const contractAddress = "0xa75D9341EEA4C3a994DA402a920BBc78A0c65af9";
+
+  const contractABI = abi.abi;
+
+
+
+
+
+  
   /*
   * Just a state variable we use to store our user's public wallet.
   */
@@ -23,6 +39,8 @@ const App = () => {
       * Check if we're authorized to access the user's wallet
       */
       const accounts = await ethereum.request({ method: "eth_accounts" });
+
+
 
       if (accounts.length !== 0) {
         const account = accounts[0];
@@ -59,6 +77,85 @@ const App = () => {
     }
   }
 
+
+  //function
+  /*wave function - retrieves total number of waves*/
+const wave = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        /* using abi smart contract here */
+        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let count = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", count.toNumber());
+
+        /*
+        * Execute the actual wave from your smart contract
+        */
+        const waveTxn = await wavePortalContract.wave();
+        console.log("Mining... (New Transaction)", waveTxn.hash);
+
+        await waveTxn.wait();
+        console.log("Mined -- ", waveTxn.hash);
+
+        count = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", count.toNumber());
+
+
+        //you can use getElementBy Id to change messages! 
+        // document.getElementById("greeting").innerHTML = count;
+
+        
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+  const checkTotalWaves = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        /* using abi smart contract here */
+        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let count = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", count.toNumber());
+
+        count = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", count.toNumber());
+
+        //you can use getElementBy Id to change messages! 
+        document.getElementById("greeting").innerHTML = count;
+
+        
+      } else {
+        console.log("Ethereum object doesn't exist!");
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+    
+
+
+  
+
+
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [])
@@ -68,6 +165,9 @@ const App = () => {
   return (
     <div className="mainContainer">
       <div className="dataContainer">
+
+
+  
         <div className="header">
           👋 Hey there!
         </div>
@@ -76,9 +176,17 @@ const App = () => {
           Hello my name is Gabe and I am trying to create a wave portal :)) Pretty cool right!?
         </div>
 
-        <button className="waveButton" onClick={null}>
-          Wave at Me
+
+
+
+
+        <div className="center-things">        
+        
+
+        <button className="waveButton" onClick={wave}>
+          Wave - pushes 1 transaction (No counter)
         </button>
+        
 
          {/*
         * If there is no currentAccount render this button
@@ -90,10 +198,37 @@ const App = () => {
         )}
 
 
+
+
+        </div>
+
+
+
+        
+        
+        <div className="box-container">
+          <div className="center-things">
+        
+          <button className="Button-1" onClick={checkTotalWaves}>
+            Check how many transactions pushed
+          </button>
+
+          </div>
+        </div>
+
+        <div className="center-things1">        
+        Number of waves pushed to chain:
+        </div>
+        
+        <div className="center-things">        
+          <p id="greeting"></p>
+        </div>
+
+          
+
         
 
 
-        
 
         
       </div>
