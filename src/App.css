@@ -31,7 +31,8 @@
   border: 0;
   border-radius: 5px;
    
-  width: 500px;
+  width: 300px;
+  background-color: lime; 
 
   /* this is aligning itself */
   align-self: center; 
@@ -63,7 +64,7 @@
   border-radius: 5px;
   background-color: cyan;
 
-  width: 500px;
+  width: 300px;
   
   
 }

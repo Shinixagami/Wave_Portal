@@ -214,8 +214,6 @@ const wave = async () => {
           )}
 
 
-
-
         
         
         <div className="box-container">
